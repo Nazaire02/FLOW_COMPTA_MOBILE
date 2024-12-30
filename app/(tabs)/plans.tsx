@@ -3,13 +3,11 @@ import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-export default function HomeScreen() {
-  const cards = [
-    { title: "Suivi Associés", icon: "group" },
-    { title: "Suivi Impayés", icon: "payment" },
-    { title: "Suivi Tiers", icon: "people" },
-    { title: "État Client", icon: "person" },
-    { title: "État Trésorerie", icon: "account-balance-wallet" },
+export default function plans() {
+const data = [
+    { id: '1', title: 'Plan analytique', icon: 'analytics' },
+    { id: '2', title: "Plan compta", icon: 'account-balance' },
+    { id: '3', title: 'Plan tiers', icon: 'group' }
   ];
 
   return (
@@ -29,7 +27,7 @@ export default function HomeScreen() {
       </View>
 
       {/* Cards Section */}
-      {cards.map((card, index) => (
+      {data.map((card, index) => (
         <TouchableOpacity key={index} style={styles.card}>
           <MaterialIcons name={card.icon} size={32} color={styles.iconColor.color} />
           <Text style={styles.cardText}>{card.title}</Text>

@@ -3,13 +3,12 @@ import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-export default function HomeScreen() {
+export default function transactions() {
   const cards = [
-    { title: "Suivi Associés", icon: "group" },
-    { title: "Suivi Impayés", icon: "payment" },
-    { title: "Suivi Tiers", icon: "people" },
-    { title: "État Client", icon: "person" },
-    { title: "État Trésorerie", icon: "account-balance-wallet" },
+    { title: "Opération comptable", icon: "receipt" },
+    { title: "Opérations analytique", icon: "insights" },
+    { title: "Banque", icon: "account-balance-wallet" },
+    { title: "Caisse", icon: "attach-money" },
   ];
 
   return (
