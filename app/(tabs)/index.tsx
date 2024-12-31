@@ -6,9 +6,9 @@ import RectCard from "@/components/RectCard";
 
 export default function HomeScreen() {
   const cards = [
-    { id:"1",title: "Suivi Associés", icon: "group", link:""},
-    { id:"2",title: "Suivi Impayés", icon: "payment", link:""},
-    { id:"3",title: "Suivi Tiers", icon: "people", link:""},
+    { id:"1",title: "Suivi Associés", icon: "group", link:"(suivis)"},
+    { id:"2",title: "Suivi Impayés", icon: "payment", link:"(suivis)/suiviImpaye"},
+    { id:"3",title: "Suivi Tiers", icon: "people", link:"(suivis)/suiviTiers"},
     { id:"4",title: "État Client", icon: "person", link:""},
     { id:"5",title: "État Trésorerie", icon: "account-balance-wallet", link:""},
   ];
@@ -29,7 +29,7 @@ export default function HomeScreen() {
       </View>
 
       {cards.map((card, index) => (
-<RectCard id={card.id} title={card.title} icon={card.icon} key={index}/>
+<RectCard id={card.id} title={card.title} icon={card.icon} key={index} link={card.link}/>
       ))}
     </SafeAreaView>
   );

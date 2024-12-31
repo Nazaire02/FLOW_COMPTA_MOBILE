@@ -28,7 +28,7 @@ export default function plans() {
       </View>
 
       {data.map((card, index) => (
-        <RectCard id={card.id} title={card.title} icon={card.icon} key={index} />
+        <RectCard id={card.id} title={card.title} icon={card.icon} key={index} link={card.link}/>
       ))}
     </SafeAreaView>
   );

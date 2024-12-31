@@ -1,16 +1,18 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import { MaterialIcons } from '@expo/vector-icons';
+import { router } from 'expo-router';
 
 type CardProps = {
     id: string;
     title: string;
     icon: string;
+    link:string
 };
 
-export default function RectCard({id, title, icon}: CardProps){
+export default function RectCard({id, title, icon, link}: CardProps){
     return (
-        <TouchableOpacity style={styles.card}>
+        <TouchableOpacity style={styles.card} onPress={()=> router.navigate(link)}>
             <MaterialIcons name={icon} size={32} color={styles.iconColor.color} />
             <Text style={styles.cardText}>{title}</Text>
         </TouchableOpacity>
