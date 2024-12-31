@@ -2,19 +2,19 @@ import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
+import RectCard from "@/components/RectCard";
 
 export default function HomeScreen() {
   const cards = [
-    { title: "Suivi Associés", icon: "group" },
-    { title: "Suivi Impayés", icon: "payment" },
-    { title: "Suivi Tiers", icon: "people" },
-    { title: "État Client", icon: "person" },
-    { title: "État Trésorerie", icon: "account-balance-wallet" },
+    { id:"1",title: "Suivi Associés", icon: "group", link:""},
+    { id:"2",title: "Suivi Impayés", icon: "payment", link:""},
+    { id:"3",title: "Suivi Tiers", icon: "people", link:""},
+    { id:"4",title: "État Client", icon: "person", link:""},
+    { id:"5",title: "État Trésorerie", icon: "account-balance-wallet", link:""},
   ];
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* Header Section */}
       <View style={styles.header}>
         <View style={styles.userInfo}>
           <Image
@@ -28,12 +28,8 @@ export default function HomeScreen() {
         </TouchableOpacity>
       </View>
 
-      {/* Cards Section */}
       {cards.map((card, index) => (
-        <TouchableOpacity key={index} style={styles.card}>
-          <MaterialIcons name={card.icon} size={32} color={styles.iconColor.color} />
-          <Text style={styles.cardText}>{card.title}</Text>
-        </TouchableOpacity>
+<RectCard id={card.id} title={card.title} icon={card.icon} key={index}/>
       ))}
     </SafeAreaView>
   );
@@ -65,29 +61,5 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     color: "#000",
-  },
-  card: {
-    width: "90%",
-    backgroundColor: "#FFD700",
-    borderRadius: 10,
-    padding: 20,
-    marginVertical: 10,
-    flexDirection: "row",
-    alignItems: "center",
-    alignSelf: "center",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-  cardText: {
-    marginLeft: 20,
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "#000",
-  },
-  iconColor: {
-    color: "#000",
-  },
+  }
 });
