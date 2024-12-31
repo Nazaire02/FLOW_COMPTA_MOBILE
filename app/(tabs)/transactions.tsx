@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { Colors } from "@/constants/Colors";
 
 export default function transactions() {
   const cards = [
@@ -13,7 +14,6 @@ export default function transactions() {
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* Header Section */}
       <View style={styles.header}>
         <View style={styles.userInfo}>
           <Image
@@ -26,8 +26,6 @@ export default function transactions() {
           <MaterialIcons name="settings" size={28} color="#000" />
         </TouchableOpacity>
       </View>
-
-      {/* Cards Section */}
       {cards.map((card, index) => (
         <TouchableOpacity key={index} style={styles.card}>
           <MaterialIcons name={card.icon} size={32} color={styles.iconColor.color} />
@@ -67,7 +65,7 @@ const styles = StyleSheet.create({
   },
   card: {
     width: "90%",
-    backgroundColor: "#FFD700",
+    backgroundColor: Colors.light.tint,
     borderRadius: 10,
     padding: 20,
     marginVertical: 10,

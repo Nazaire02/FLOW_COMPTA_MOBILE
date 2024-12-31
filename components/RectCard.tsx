@@ -2,6 +2,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import { MaterialIcons } from '@expo/vector-icons';
 import { router } from 'expo-router';
+import { Colors } from '@/constants/Colors';
 
 type CardProps = {
     id: string;
@@ -22,7 +23,7 @@ export default function RectCard({id, title, icon, link}: CardProps){
 const styles = StyleSheet.create({
     card: {
         width: "90%",
-        backgroundColor: "#FFD700",
+        backgroundColor: Colors.light.tint,
         borderRadius: 10,
         padding: 20,
         marginVertical: 10,

@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
+import { Colors } from '@/constants/Colors'
 
 type Props={
     number: string,
@@ -18,5 +19,5 @@ export default function SummaryCard({number, label}:Props) {
 const styles = StyleSheet.create({
     summaryCard: { backgroundColor: '#F5F5F5', padding: 16, marginBottom: 8, borderRadius: 8, width: '48%' },
     summaryNumber: { color: '#333', fontSize: 20, fontWeight: 'bold' },
-    summaryLabel: { color: '#FFD700', fontSize: 12 },
+    summaryLabel: { color: Colors.light.tint, fontSize: 12 },
 })

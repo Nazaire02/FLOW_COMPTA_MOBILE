@@ -1,6 +1,7 @@
 import { SuiviImpayeItem } from '@/class/SuiviImpayeItem';
 import { SuiviTiersItem } from '@/class/suiviTiersItem';
 import SummaryCard from '@/components/SummaryCard';
+import { Colors } from '@/constants/Colors';
 import { MaterialIcons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import React, { useState } from 'react';
@@ -47,7 +48,7 @@ export default function SuiviTiers() {
             <ScrollView style={styles.container}>
                 <View style={styles.header}>
                     <MaterialIcons name="arrow-back" size={24} color="black" onPress={() => router.back()} />
-                    <Text style={styles.headerText}>Suivi des impayés</Text>
+                    <Text style={styles.headerText}>Suivi des tiers</Text>
                 </View>
                 <View style={styles.actionsContainer}>
                     <TouchableOpacity style={styles.button}>
@@ -81,9 +82,9 @@ const styles = StyleSheet.create({
     summaryContainer: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between' },
     summaryCard: { backgroundColor: '#F5F5F5', padding: 16, marginBottom: 8, borderRadius: 8, width: '48%' },
     summaryNumber: { color: '#333', fontSize: 20, fontWeight: 'bold' },
-    summaryLabel: { color: '#FFD700', fontSize: 12 },
+    summaryLabel: { color: Colors.light.tint, fontSize: 12 },
     actionsContainer: { marginTop: 16 },
-    button: { backgroundColor: '#FFD700', padding: 12, borderRadius: 8, marginBottom: 8 },
+    button: { backgroundColor: Colors.light.tint, padding: 12, borderRadius: 8, marginBottom: 8 },
     searchBar: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -101,7 +102,7 @@ const styles = StyleSheet.create({
     },
     buttonText: { color: '#FFF', textAlign: 'center' },
     card: { backgroundColor: '#F9F9F9', padding: 16, borderRadius: 8, marginBottom: 8 },
-    cardTitle: { color: '#FFD700', fontSize: 16, fontWeight: 'bold' },
+    cardTitle: { color: Colors.light.tint, fontSize: 16, fontWeight: 'bold' },
     noData: { color: '#333', textAlign: 'center', marginVertical: 16 },
     header: {
         flexDirection: "row",

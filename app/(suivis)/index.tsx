@@ -1,5 +1,6 @@
 import { SuiviAssocieItem } from '@/class/SuiviAssocieItem';
 import SummaryCard from '@/components/SummaryCard';
+import { Colors } from '@/constants/Colors';
 import { MaterialIcons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import React, { useState } from 'react';
@@ -48,8 +49,8 @@ export default function Index() {
     const [searchQuery, setSearchQuery] = useState('');
     const filteredData: SuiviAssocieItem[] = data.filter(item => item.libelle.toLowerCase().includes(searchQuery.toLowerCase()));
 
-    const renderCard = (item: SuiviAssocieItem) => (
-        <View style={styles.card} key={item.libelle}>
+    const renderCard = (item: SuiviAssocieItem, index: number) => (
+        <View style={styles.card} key={index}>
             <Text style={styles.cardTitle}>Date: {item.date}</Text>
             <Text>Libelle: {item.libelle}</Text>
             <Text>Tiers: {item.tiers}</Text>
@@ -88,7 +89,7 @@ export default function Index() {
                 </View>
                 <ScrollView>
                     {filteredData.length > 0 ? (
-                        filteredData.map((item, index) => renderCard(item))
+                        filteredData.map((item, index) => renderCard(item, index))
                     ) : (
                         <Text style={styles.noData}>Aucune donnée n'est disponible pour la requête de recherche donnée.</Text>
                     )}
@@ -104,9 +105,9 @@ const styles = StyleSheet.create({
     summaryContainer: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between' },
     summaryCard: { backgroundColor: '#F5F5F5', padding: 16, marginBottom: 8, borderRadius: 8, width: '48%' },
     summaryNumber: { color: '#333', fontSize: 20, fontWeight: 'bold' },
-    summaryLabel: { color: '#FFD700', fontSize: 12 },
+    summaryLabel: { color: Colors.light.tint, fontSize: 12 },
     actionsContainer: { marginTop: 16 },
-    button: { backgroundColor: '#FFD700', padding: 12, borderRadius: 8, marginBottom: 8 },
+    button: { backgroundColor: Colors.light.tint, padding: 12, borderRadius: 8, marginBottom: 8 },
     searchBar: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -124,7 +125,7 @@ const styles = StyleSheet.create({
     },
     buttonText: { color: '#FFF', textAlign: 'center' },
     card: { backgroundColor: '#F9F9F9', padding: 16, borderRadius: 8, marginBottom: 8 },
-    cardTitle: { color: '#FFD700', fontSize: 16, fontWeight: 'bold' },
+    cardTitle: { color: Colors.light.tint, fontSize: 16, fontWeight: 'bold' },
     noData: { color: '#333', textAlign: 'center', marginVertical: 16 },
     header: {
         flexDirection: "row",

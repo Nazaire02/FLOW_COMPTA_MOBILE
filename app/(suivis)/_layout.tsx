@@ -6,6 +6,7 @@ export default function RootLayout() {
             <Stack.Screen name="index" options={{ headerShown: false }} />
             <Stack.Screen name="suiviImpaye" options={{ headerShown: false }} />
             <Stack.Screen name="suiviTiers" options={{ headerShown: false }} />
+            <Stack.Screen name="etatTresorerie" options={{ headerShown: false }} />
         </Stack>
     );
 }

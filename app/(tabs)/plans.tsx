@@ -6,7 +6,7 @@ import RectCard from "@/components/RectCard";
 
 export default function plans() {
   const data = [
-    { id: '1', title: 'Plan analytique', icon: 'analytics', link:"" },
+    { id: '1', title: 'Plan analytique', icon: 'analytics', link:"(plans)" },
     { id: '2', title: "Plan compta", icon: 'account-balance', link:""  },
     { id: '3', title: 'Plan tiers', icon: 'group', link:"" }
   ];

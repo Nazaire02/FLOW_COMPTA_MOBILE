@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, View, Text, FlatList, SafeAreaView } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { BlurView } from 'expo-blur';
+import { Colors } from '@/constants/Colors';
 
 const data = [
   { id: '1', title: 'Compte analytique', icon: 'analytics' },
@@ -22,7 +23,7 @@ export default function bilansComptes() {
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <BlurView intensity={50} style={styles.card}>
-            <MaterialIcons name={item.icon} size={30} color="#FFD700" />
+            <MaterialIcons name={item.icon} size={30} color={Colors.light.tint }/>
             <Text style={styles.cardText}>{item.title}</Text>
           </BlurView>
         )}
@@ -38,7 +39,7 @@ export default function bilansComptes() {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#FFF', // White background for the screen
+      backgroundColor: '#FFF',
       padding: 16,
       justifyContent: 'center'
     },
@@ -57,13 +58,13 @@ const styles = StyleSheet.create({
       padding: 16,
       alignItems: 'center',
       justifyContent: 'center',
-      backgroundColor: 'rgba(0, 0, 0, 0.05)', // Subtle black tint for contrast
+      backgroundColor: 'rgba(0, 0, 0, 0.05)',
       overflow: 'hidden',
     },
     cardText: {
       marginTop: 10,
       fontSize: 16,
-      color: '#FFD700', // Golden text for highlighting
+      color: Colors.light.tint,
       fontWeight: 'bold',
       textAlign: 'center',
     },
