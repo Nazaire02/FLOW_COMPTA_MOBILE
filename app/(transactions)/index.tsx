@@ -1,5 +1,5 @@
+import { opComptItem } from '@/class/opComptItem';
 import { SuiviAssocieItem } from '@/class/SuiviAssocieItem';
-import SummaryCard from '@/components/SummaryCard';
 import { Colors } from '@/constants/Colors';
 import { MaterialIcons } from '@expo/vector-icons';
 import { router } from 'expo-router';
@@ -9,55 +9,60 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function Index() {
     //Les éléments de chaque objet seront affichés dans le mm ordre que dans l'objet
-    const data: SuiviAssocieItem[] = [
+    const data: opComptItem[] = [
         {
             date: '2024-12-01',
-            libelle: 'Invoice 001',
-            tiers: 'Company A',
-            source: 'Paid',
-            entree: '$1,200',
-            sortie: '$200',
-            solde: '$1,000',
+            nSaisie:'4',
+            desOperation:'facture CIE',
+            refPiece:'FHNdjzedkzedf',
+            mainAccount:'104300',
+            tiersAccount: '104302',
+            planAnalytique:true,
+            imputation:'Ventes',
+            debit:'1000',
+            credit:'1000'
         },
         {
-            date: '2024-12-02',
-            libelle: 'Invoice 002',
-            tiers: 'Company B',
-            source: 'Unpaid',
-            entree: '$800',
-            sortie: '$0',
-            solde: '$800',
+          date: '2024-12-01',
+          nSaisie:'4',
+          desOperation:'facture CIE',
+          refPiece:'FHNdjzedkzedf',
+          mainAccount:'104300',
+          tiersAccount: '104302',
+          planAnalytique:true,
+          imputation:'Ventes',
+          debit:'1000',
+          credit:'1000'
         },
         {
-            date: '2024-12-03',
-            libelle: 'Invoice 003',
-            tiers: 'Company C',
-            source: 'Paid',
-            entree: '$1,500',
-            sortie: '$300',
-            solde: '$1,200',
+          date: '2024-12-01',
+          nSaisie:'4',
+          desOperation:'facture CIE',
+          refPiece:'FHNdjzedkzedf',
+          mainAccount:'104300',
+          tiersAccount: '104302',
+          planAnalytique:true,
+          imputation:'Ventes',
+          debit:'1000',
+          credit:'1000'
         },
     ];
 
-    const summaryDatas = [
-        { label: "Clients", number: "24" },
-        { label: "Invoices", number: "165" },
-        { label: "Paid", number: "$2.46k" },
-        { label: "Unpaid", number: "$876" },
-    ]
-
     const [searchQuery, setSearchQuery] = useState('');
-    const filteredData: SuiviAssocieItem[] = data.filter(item => item.libelle.toLowerCase().includes(searchQuery.toLowerCase()));
+    const filteredData: opComptItem[] = data.filter(item => item.refPiece.toLowerCase().includes(searchQuery.toLowerCase()));
 
-    const renderCard = (item: SuiviAssocieItem, index: number) => (
+    const renderCard = (item: opComptItem, index: number) => (
         <View style={styles.card} key={index}>
             <Text style={styles.cardTitle}>Date: {item.date}</Text>
-            <Text>Libelle: {item.libelle}</Text>
-            <Text>Tiers: {item.tiers}</Text>
-            <Text>Source/État: {item.source}</Text>
-            <Text>Entrée: {item.entree}</Text>
-            <Text>Sortie: {item.sortie}</Text>
-            <Text>Solde: {item.solde}</Text>
+            <Text>N saisie: {item.nSaisie}</Text>
+            <Text>Desc. opération: {item.desOperation}</Text>
+            <Text>REF PIECE: {item.refPiece}</Text>
+            <Text>Compte général: {item.mainAccount}</Text>
+            <Text>Compte tiers: {item.tiersAccount}</Text>
+            <Text>Plan analytique: {item.planAnalytique ? "Oui":"Non"}</Text>
+            <Text>Imputation: {item.imputation}</Text>
+            <Text>Débit: {item.debit}</Text>
+            <Text>Crédit: {item.credit}</Text>
         </View>
     );
 
@@ -66,12 +71,7 @@ export default function Index() {
             <ScrollView style={styles.container}>
                 <View style={styles.header}>
                     <MaterialIcons name="arrow-back" size={24} color="black" onPress={() => router.back()} />
-                    <Text style={styles.headerText}>Suivi Associés</Text>
-                </View>
-                <View style={styles.summaryContainer}>
-                    {summaryDatas.map((data, index) => (
-                        <SummaryCard number={data.number} label={data.label} key={index}/>
-                    ))}
+                    <Text style={styles.headerText}>Opérations comptables</Text>
                 </View>
                 <View style={styles.actionsContainer}>
                     <TouchableOpacity style={styles.button}>
