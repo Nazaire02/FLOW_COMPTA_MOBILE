@@ -31,12 +31,28 @@ export default function tiers() {
     const [searchQuery, setSearchQuery] = useState('');
     const filteredData: SuiviTiersItem[] = data.filter(item => item.numTiers.toLowerCase().includes(searchQuery.toLowerCase()));
 
-    const renderCard = (item: SuiviTiersItem, index:number) => (
+    const renderCard = (item: SuiviTiersItem, index: number) => (
         <View style={styles.card} key={index}>
+            <View>
             <Text style={styles.cardTitle}>N tier: {item.numTiers}</Text>
             <Text>Compte général: {item.mainAccount}</Text>
             <Text>Intitulé: {item.intitule}</Text>
             <Text>Type de tiers: {item.typeTiers}</Text>
+            </View>
+            <View style={styles.actions}>
+                <TouchableOpacity>
+                    <MaterialIcons name="email" size={24} color="black" />
+                </TouchableOpacity>
+                <TouchableOpacity>
+                    <MaterialIcons name="visibility" size={24} color="black" />
+                </TouchableOpacity>
+                <TouchableOpacity>
+                    <MaterialIcons name="edit" size={24} color="black" />
+                </TouchableOpacity>
+                <TouchableOpacity>
+                    <MaterialIcons name="delete" size={24} color="red" />
+                </TouchableOpacity>
+            </View>
         </View>
     );
 
@@ -45,21 +61,19 @@ export default function tiers() {
             <ScrollView style={styles.container}>
                 <View style={styles.header}>
                     <MaterialIcons name="arrow-back" size={24} color="black" onPress={() => router.back()} />
-                    <Text style={styles.headerText}>Suivi des tiers</Text>
+                    <Text style={styles.headerText}>Plan tiers</Text>
                 </View>
-                <View style={styles.actionsContainer}>
-                    <TouchableOpacity style={styles.button}>
-                        <Text style={styles.buttonText}>Créer num. plan de tiers</Text>
+                <View style={styles.searchContainer}>
+                    <TextInput
+                        style={styles.searchInput}
+                        placeholder="Rechercher un compte"
+                        value={searchQuery}
+                        onChangeText={setSearchQuery}
+                    />
+                    <TouchableOpacity style={styles.statusButton}>
+                        <Text style={styles.statusButtonText}>Select Status</Text>
+                        <MaterialIcons name="arrow-drop-down" size={24} color="black" />
                     </TouchableOpacity>
-                    <View style={styles.searchBar}>
-                        <MaterialIcons name="search" size={24} color="#6c757d" style={styles.searchIcon} />
-                        <TextInput
-                            style={styles.searchInput}
-                            placeholder="Search"
-                            value={searchQuery}
-                            onChangeText={setSearchQuery}
-                        />
-                    </View>
                 </View>
                 <ScrollView>
                     {filteredData.length > 0 ? (
@@ -82,21 +96,6 @@ const styles = StyleSheet.create({
     summaryLabel: { color: Colors.light.tint, fontSize: 12 },
     actionsContainer: { marginTop: 16 },
     button: { backgroundColor: Colors.light.tint, padding: 12, borderRadius: 8, marginBottom: 8 },
-    searchBar: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        backgroundColor: '#f0f0f0',
-        borderRadius: 8,
-        padding: 8,
-        marginBottom: 16,
-    },
-    searchIcon: {
-        marginRight: 8,
-    },
-    searchInput: {
-        flex: 1,
-        fontSize: 16,
-    },
     buttonText: { color: '#FFF', textAlign: 'center' },
     card: { backgroundColor: '#F9F9F9', padding: 16, borderRadius: 8, marginBottom: 8 },
     cardTitle: { color: Colors.light.tint, fontSize: 16, fontWeight: 'bold' },
@@ -104,7 +103,7 @@ const styles = StyleSheet.create({
     header: {
         flexDirection: "row",
         alignItems: "center",
-        marginBottom: 30,
+        marginBottom: 20,
     },
     headerText: {
         flex: 1,
@@ -112,4 +111,36 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         textAlign: "center"
     },
+    searchContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingVertical: 10,
+        backgroundColor: '#FFF',
+    },
+    searchInput: {
+        flex: 1,
+        height: 40,
+        borderWidth: 1,
+        borderColor: '#FFD700',
+        borderRadius: 5,
+        paddingHorizontal: 10,
+        marginRight: 10,
+        backgroundColor: '#FFF',
+    },
+    statusButton: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        borderWidth: 1,
+        borderColor: '#FFD700',
+        borderRadius: 5,
+        paddingHorizontal: 10,
+        height: 40,
+        backgroundColor: '#FFF',
+    },
+    statusButtonText: {
+        fontSize: 14,
+        marginRight: 5,
+        color: 'black',
+    },
+    actions: { flexDirection: 'row', justifyContent: 'space-around', marginTop:20 },
 });
