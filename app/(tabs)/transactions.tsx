@@ -3,13 +3,14 @@ import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Colors } from "@/constants/Colors";
+import { router } from "expo-router";
 
 export default function transactions() {
   const cards = [
-    { title: "Opération comptable", icon: "receipt" },
-    { title: "Opérations analytique", icon: "insights" },
-    { title: "Banque", icon: "account-balance-wallet" },
-    { title: "Caisse", icon: "attach-money" },
+    { title: "Opération comptable", icon: "receipt", link:"(transactions)" },
+    { title: "Opérations analytique", icon: "insights", link:"(transactions)/operationsAnalytique" },
+    { title: "Banque", icon: "account-balance-wallet", link:"(transactions)/banque" },
+    { title: "Caisse", icon: "attach-money", link:"(transactions)/caisse" },
   ];
 
   return (
@@ -27,7 +28,7 @@ export default function transactions() {
         </TouchableOpacity>
       </View>
       {cards.map((card, index) => (
-        <TouchableOpacity key={index} style={styles.card}>
+        <TouchableOpacity key={index} style={styles.card} onPress={()=>router.navigate(card.link)}>
           <MaterialIcons name={card.icon} size={32} color={styles.iconColor.color} />
           <Text style={styles.cardText}>{card.title}</Text>
         </TouchableOpacity>
