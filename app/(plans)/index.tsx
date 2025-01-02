@@ -2,14 +2,15 @@ import React from 'react';
 import { View, Text, FlatList, TouchableOpacity, StyleSheet, TextInput, ScrollView, SafeAreaView } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { planItem } from '@/class/planItem';
+import { router } from 'expo-router';
 
 export default function index() {
-  const plans = [
-    { id: 1, title: 'Plan Analytique 1', data: [{ label: 'Rentabilité des Services', value: '4' }] },
-    { id: 2, title: 'Plan Analytique 2', data: [{ label: 'Rentabilité des Clients', value: '4' }] },
+  const plans: planItem[] = [
+    { id: "1", title: 'Plan Analytique 1', data: [{ label: 'Rentabilité des Services', value: '4' }] },
+    { id: "2", title: 'Plan Analytique 2', data: [{ label: 'Rentabilité des Clients', value: '4' }] },
   ];
 
-  const RenderPlan = (item:planItem, index: number) => (
+  const RenderPlan = (item: planItem, index: number) => (
     <View style={styles.planContainer} key={index}>
       <View style={styles.planHeader}>
         <Text style={styles.planTitle}>{item.title}</Text>
@@ -18,16 +19,12 @@ export default function index() {
           <Text style={styles.createButtonText}>Créer</Text>
         </TouchableOpacity>
       </View>
-      <FlatList
-        data={item.data}
-        keyExtractor={(data, index) => index.toString()}
-        renderItem={({ item: dataItem }) => (
-          <View style={styles.dataRow}>
-            <Text style={styles.label}>{dataItem.label}</Text>
-            <Text style={styles.value}>{dataItem.value}</Text>
-          </View>
-        )}
-      />
+      {item.data.map((dataItem, index) => (
+        <View style={styles.dataRow} key={index}>
+          <Text style={styles.label}>{dataItem.label}</Text>
+          <Text style={styles.value}>{dataItem.value}</Text>
+        </View>
+      ))}
       <View style={styles.actions}>
         <TouchableOpacity>
           <MaterialIcons name="mail" size={24} color="black" />
@@ -43,22 +40,53 @@ export default function index() {
   );
 
   return (
-    <SafeAreaView style={{flex:1, backgroundColor:"#FFF"}}>
-    <ScrollView style={styles.container}>
-      <View style={styles.searchContainer}>
-        <TextInput style={styles.searchInput} placeholder="Rechercher une opération" />
-        <TouchableOpacity style={styles.statusButton}>
-          <Text style={styles.statusButtonText}>Select Status</Text>
-          <MaterialIcons name="arrow-drop-down" size={24} color="black" />
-        </TouchableOpacity>
-      </View>
-      <ScrollView>
-        {plans.map((plan, index)=>(
-          <RenderPlan index={index} item={plan}/>
-        ))}
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#FFF" }}>
+      <ScrollView style={styles.container}>
+        <View style={styles.header}>
+          <MaterialIcons name="arrow-back" size={24} color="black" onPress={() => router.back()} />
+          <Text style={styles.headerText}>Plan analytique</Text>
+        </View>
+        <View style={styles.planContainer}>
+          <View style={styles.planHeader}>
+            <Text style={styles.planTitle}>Type de plan</Text>
+            <TouchableOpacity style={styles.createButton}>
+              <MaterialIcons name="add" size={20} color="black" />
+              <Text style={styles.createButtonText}>Créer un type</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.dataRow}>
+            <Text style={styles.label}>Type de plan</Text>
+            <Text style={styles.value}>4</Text>
+          </View>
+          <View style={styles.dataRow}>
+            <Text style={styles.label}>Description</Text>
+            <Text style={styles.value}>4</Text>
+          </View>
+          <View style={styles.actions}>
+            <TouchableOpacity>
+              <MaterialIcons name="mail" size={24} color="black" />
+            </TouchableOpacity>
+            <TouchableOpacity>
+              <MaterialIcons name="visibility" size={24} color="black" />
+            </TouchableOpacity>
+            <TouchableOpacity>
+              <MaterialIcons name="more-vert" size={24} color="black" />
+            </TouchableOpacity>
+          </View>
+        </View>
+        <View style={styles.searchContainer}>
+          <TextInput style={styles.searchInput} placeholder="Rechercher une opération" />
+          <TouchableOpacity style={styles.statusButton}>
+            <Text style={styles.statusButtonText}>Select Status</Text>
+            <MaterialIcons name="arrow-drop-down" size={24} color="black" />
+          </TouchableOpacity>
+        </View>
+        <ScrollView>
+          {plans.map((plan, index) => (
+            RenderPlan(plan, index)
+          ))}
+        </ScrollView>
       </ScrollView>
-      <FlatList data={plans} keyExtractor={(item) => item.id.toString()} renderItem={renderPlan} />
-    </ScrollView>
     </SafeAreaView>
   );
 }
@@ -68,6 +96,17 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#FFF',
   },
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 30,
+},
+headerText: {
+    flex: 1,
+    fontSize: 20,
+    fontWeight: 'bold',
+    textAlign: "center"
+},
   searchContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
