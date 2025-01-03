@@ -112,13 +112,9 @@ export default function saisies() {
                 <Text style={styles.uploadButtonText}>Parcourir...</Text>
               </Pressable>
               <View style={{ justifyContent: "center", paddingLeft: 10 }}>
-                <Text>
-                  {!fileChoosed
-                    ? "Aucun fichier sélectionné"
-                    : fileChoosed.length > 27
-                      ? `${fileChoosed.slice(0, 27)}...`
-                      : fileChoosed}
-                </Text>
+              <Text>
+                {fileChoosed || 'Aucun fichier sélectionné'}
+              </Text>
               </View>
             </View>
           </View>
