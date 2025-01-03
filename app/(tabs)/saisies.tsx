@@ -4,12 +4,14 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, SafeAr
 import DropDownPicker from 'react-native-dropdown-picker';
 import * as DocumentPicker from 'expo-document-picker';
 import { Colors } from '@/constants/Colors';
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 export default function saisies() {
   const [rows, setRows] = useState([
     { id: 1, generalAccount: "", thirdPartyAccount: "", debit: "", credit: "", analytic: "Oui" },
   ]);
   const [currentStep, setCurrentStep] = useState(1);
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const currentDate = new Date();
   const [operations, setOperations] = useState([
     { label: 'Opération 1', value: 'Opération1' },
@@ -26,6 +28,7 @@ export default function saisies() {
   const [definedWritingChoosed, setDefinedWritingChoosed] = useState(null);
 
   const [fileChoosed, setFileChoosed] = useState('');
+  const [dateOperationChoosed, setDateOperationChoosed] = useState(new Date);
 
   const addRow = () => {
     setRows([
@@ -48,6 +51,18 @@ export default function saisies() {
       console.error("Error picking document:", error);
     }
   };
+  const showDatePicker = () => {
+    setDatePickerVisibility(true);
+  };
+  const hideDatePicker = () => {
+    setDatePickerVisibility(false);
+  };
+
+  const handleConfirm = (date: any) => {
+    setDateOperationChoosed(date)
+    hideDatePicker();
+  };
+
   const renderStepContent = () => {
     switch (currentStep) {
       case 1:
@@ -112,7 +127,25 @@ export default function saisies() {
         return (
           <View style={styles.stepContainer}>
             <Text style={styles.heading}>Etape 3: Saisie de l'opération</Text>
-            <TextInput style={styles.input} placeholder="Date de l'opération" />
+            <DateTimePickerModal
+              isVisible={isDatePickerVisible}
+              mode="date"
+              onConfirm={handleConfirm}
+              onCancel={hideDatePicker}
+            />
+            <View style={[styles.uploadContainer, {marginBottom:16}]}>
+              <Pressable style={styles.uploadButton} onPress={showDatePicker}>
+                <Text style={styles.uploadButtonText}>Date de l'opération</Text>
+              </Pressable>
+              <View style={{ justifyContent: "center", paddingLeft: "20%" }}>
+                <Text>
+                  {!dateOperationChoosed
+                    ? "Aucune date sélectionnée"
+                    : dateOperationChoosed.getDate()+"/"+dateOperationChoosed.getMonth()+1+"/"+dateOperationChoosed.getFullYear()
+                  }
+                </Text>
+              </View>
+            </View>
             <TextInput style={styles.input} placeholder="Total Débit" />
             <TextInput style={styles.input} placeholder="Total Crédit" />
             <Text style={styles.sectionTitle}>Détails Opération</Text>
@@ -254,6 +287,14 @@ const styles = StyleSheet.create({
     padding: 15,
     marginBottom: 16,
   },
+  dateInput: {
+    borderWidth: 1,
+    borderColor: '#FFD700',
+    borderRadius: 8,
+    padding: 15,
+    marginBottom: 16,
+    height: 50
+  },
   addButton: {
     backgroundColor: '#FFD700',
     padding: 10,
@@ -265,8 +306,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   navigation: {
-    flex:1,
-    paddingBottom:70,
+    flex: 1,
+    paddingBottom: 70,
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
