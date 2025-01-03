@@ -1,4 +1,4 @@
-import { SuiviAssocieItem } from '@/class/SuiviAssocieItem';
+import { Amortissement } from '@/class/amortissementItem';
 import SummaryCard from '@/components/SummaryCard';
 import { Colors } from '@/constants/Colors';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -7,34 +7,52 @@ import React, { useState } from 'react';
 import { ScrollView, View, Text, StyleSheet, TouchableOpacity, FlatList, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-export default function Index() {
-    const data: SuiviAssocieItem[] = [
+export default function amortissement() {
+    const data: Amortissement[] = [
         {
-            date: '2024-12-01',
-            libelle: 'Invoice 001',
-            tiers: 'Company A',
-            source: 'Paid',
-            entree: '$1,200',
-            sortie: '$200',
-            solde: '$1,000',
+            numCompte: '2024-12-01',
+            desImmo: "sDHQJEF",
+            tauxAmort: "10",
+            date: "2024-12-01",
+            valeurAcquisition: "100",
+            amortissements: {
+                anterieur: "200",
+                exercice: "100",
+                total: "300"
+            },
+            valeurResiduelle: "2000",
+            prixCession: "3000",
+            plusValue: "300"
         },
         {
-            date: '2024-12-02',
-            libelle: 'Invoice 002',
-            tiers: 'Company B',
-            source: 'Unpaid',
-            entree: '$800',
-            sortie: '$0',
-            solde: '$800',
+            numCompte: '2024-12-01',
+            desImmo: "sDHQJEF",
+            tauxAmort: "10",
+            date: "2024-12-01",
+            valeurAcquisition: "100",
+            amortissements: {
+                anterieur: "200",
+                exercice: "100",
+                total: "300"
+            },
+            valeurResiduelle: "2000",
+            prixCession: "3000",
+            plusValue: "300"
         },
         {
-            date: '2024-12-03',
-            libelle: 'Invoice 003',
-            tiers: 'Company C',
-            source: 'Paid',
-            entree: '$1,500',
-            sortie: '$300',
-            solde: '$1,200',
+            numCompte: '2024-12-01',
+            desImmo: "sDHQJEF",
+            tauxAmort: "10",
+            date: "2024-12-01",
+            valeurAcquisition: "100",
+            amortissements: {
+                anterieur: "200",
+                exercice: "100",
+                total: "300"
+            },
+            valeurResiduelle: "2000",
+            prixCession: "3000",
+            plusValue: "300"
         },
     ];
 
@@ -46,17 +64,24 @@ export default function Index() {
     ]
 
     const [searchQuery, setSearchQuery] = useState('');
-    const filteredData: SuiviAssocieItem[] = data.filter(item => item.libelle.toLowerCase().includes(searchQuery.toLowerCase()));
+    const filteredData: Amortissement[] = data.filter(item => item.numCompte.toLowerCase().includes(searchQuery.toLowerCase()));
 
-    const renderCard = (item: SuiviAssocieItem, index: number) => (
+    const renderCard = (item: Amortissement, index: number) => (
         <View style={styles.card} key={index}>
             <Text style={styles.cardTitle}>Date: {item.date}</Text>
-            <Text>Libelle: {item.libelle}</Text>
-            <Text>Tiers: {item.tiers}</Text>
-            <Text>Source/État: {item.source}</Text>
-            <Text>Entrée: {item.entree}</Text>
-            <Text>Sortie: {item.sortie}</Text>
-            <Text>Solde: {item.solde}</Text>
+            <Text>N compte: {item.numCompte}</Text>
+            <Text>Des. immobilisation: {item.desImmo}</Text>
+            <Text>Taux amort: {item.tauxAmort}%</Text>
+            <Text>Valeur d'acquisition: {item.valeurAcquisition}</Text>
+            <Text>Amortissements</Text>
+            <View style={{marginLeft:20}}>
+                <Text>Antérieur: {item.amortissements?.anterieur}</Text>
+                <Text>De l'exercice: {item.amortissements?.exercice}</Text>
+                <Text>Total: {item.amortissements?.total}</Text>
+            </View>
+            <Text>Valeur résiduelle: {item.valeurResiduelle}</Text>
+            <Text>Prix cession: {item.prixCession}</Text>
+            <Text>Plus value: {item.plusValue}</Text>
         </View>
     );
 
@@ -65,11 +90,11 @@ export default function Index() {
             <ScrollView style={styles.container}>
                 <View style={styles.header}>
                     <MaterialIcons name="arrow-back" size={24} color="black" onPress={() => router.back()} />
-                    <Text style={styles.headerText}>Suivi Associés</Text>
+                    <Text style={styles.headerText}>Amortissement</Text>
                 </View>
                 <View style={styles.summaryContainer}>
                     {summaryDatas.map((data, index) => (
-                        <SummaryCard number={data.number} label={data.label} key={index}/>
+                        <SummaryCard number={data.number} label={data.label} key={index} />
                     ))}
                 </View>
                 <View style={styles.actionsContainer}>

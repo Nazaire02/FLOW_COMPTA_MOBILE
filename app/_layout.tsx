@@ -34,8 +34,8 @@ export default function RootLayout() {
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="(suivis)" options={{ headerShown: false }} />
         <Stack.Screen name="(bilans)" options={{ headerShown: false }} />
-        <Stack.Screen name="(plans)" options={{ headerShown: false }} />
         <Stack.Screen name="(saisies)" options={{ headerShown: false }} />
+        <Stack.Screen name="(plans)" options={{ headerShown: false }} />
         <Stack.Screen name="(transactions)" options={{ headerShown: false }} />
         <Stack.Screen name="+not-found" />
       </Stack>

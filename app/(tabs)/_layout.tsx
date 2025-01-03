@@ -45,17 +45,17 @@ export default function TabLayout() {
           }}
         />
         <Tabs.Screen
-          name="plans"
-          options={{
-            title: 'Plans',
-            tabBarIcon: ({ color }) => <MaterialIcons size={28} name="calendar-today" color={color} />,
-          }}
-        />
-        <Tabs.Screen
           name="saisies"
           options={{
             title: 'Saisies',
             tabBarIcon: ({ color }) => <MaterialIcons size={28} name="edit" color={color} />,
+          }}
+        />
+        <Tabs.Screen
+          name="plans"
+          options={{
+            title: 'Plans',
+            tabBarIcon: ({ color }) => <MaterialIcons size={28} name="calendar-today" color={color} />,
           }}
         />
         <Tabs.Screen
