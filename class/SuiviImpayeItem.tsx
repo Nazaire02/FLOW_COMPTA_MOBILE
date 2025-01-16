@@ -1,9 +1,9 @@
 export class SuiviImpayeItem {
     libelle!: string;
     tiers?: string;
-    source?: string;
+    general?: string;
     entree?: string;
     sortie?: string;
-    bfr?: string;
+    type?: string;
     date?: string;
 }
