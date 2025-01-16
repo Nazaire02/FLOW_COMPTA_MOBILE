@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   View,
   StyleSheet,
@@ -15,30 +15,56 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { StatusBar } from "expo-status-bar";
 import { router } from "expo-router";
 import { Colors } from "@/constants/Colors";
+import { login } from "@/services/userService";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { UserDispatchContext } from "@/hooks/userProvider";
 
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const setUserDetails = useContext(UserDispatchContext);
 
   const validateEmail = (email:string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
+    router.navigate("/(tabs)");
     if (!validateEmail(email)) {
       Alert.alert("Erreur", "Veuillez entrer un email valide.");
       return;
     }
-    if (password.length < 6) {
+    else if (password.length < 6) {
       Alert.alert(
         "Erreur",
         "Le mot de passe doit comporter au moins 6 caractères."
       );
       return;
     }
-    router.navigate("/(tabs)");
+    else {
+      try {
+        const response = await login({ email, password });
+        const user = response.data.data
+        const user_token = response.data.token
+        await AsyncStorage.setItem('user_token', user_token);
+        if (setUserDetails) {
+          setUserDetails(user);
+        }
+        router.navigate("/(tabs)");
+      }
+      catch (error: any) {
+        const errorMessage =
+          error.response?.data?.error === "Unauthorized" 
+          ? "Identifiants incorrects, veuillez réessayer" 
+          : "Problème de connexion";
+        Alert.alert(
+          "Erreur",
+          errorMessage
+        );
+      }
+    }
   };
 
   return (

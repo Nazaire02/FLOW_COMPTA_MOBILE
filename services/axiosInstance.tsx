@@ -1,7 +1,6 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-const baseURL = 'https://dc-knowing.com/SELL_FLOW/public/api'
-//const baseURL = 'http://16.170.253.202/api'
+const baseURL = 'https://dc-knowing.com/FLOW_COMPTA/public/api'
 const axiosInstance = axios.create({
     baseURL: baseURL,
     timeout: 10000,
