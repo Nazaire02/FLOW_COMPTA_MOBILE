@@ -5,7 +5,7 @@ export const getAllSuiviAssocie = async () => {
 };
 
 export const getAllSuiviImpaye = async () => {
-    return axiosInstance.get('/suivi-impaye');
+    return axiosInstance.get('/suivi-impayes');
 };
 
 export const getAllSuiviTiers = async () => {

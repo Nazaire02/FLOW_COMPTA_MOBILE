@@ -1,43 +1,15 @@
 import { SuiviAssocieItem } from '@/class/SuiviAssocieItem';
 import SummaryCard from '@/components/SummaryCard';
 import { Colors } from '@/constants/Colors';
+import { getAllSuiviAssocie } from '@/services/suiviService';
 import { MaterialIcons } from '@expo/vector-icons';
 import { router } from 'expo-router';
-import React, { useState } from 'react';
-import { ScrollView, View, Text, StyleSheet, TouchableOpacity, FlatList, TextInput } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { ScrollView, View, Text, StyleSheet, TouchableOpacity, FlatList, TextInput, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function Index() {
-    const data: SuiviAssocieItem[] = [
-        {
-            date: '2024-12-01',
-            libelle: 'Invoice 001',
-            tiers: 'Company A',
-            source: 'Paid',
-            entree: '$1,200',
-            sortie: '$200',
-            solde: '$1,000',
-        },
-        {
-            date: '2024-12-02',
-            libelle: 'Invoice 002',
-            tiers: 'Company B',
-            source: 'Unpaid',
-            entree: '$800',
-            sortie: '$0',
-            solde: '$800',
-        },
-        {
-            date: '2024-12-03',
-            libelle: 'Invoice 003',
-            tiers: 'Company C',
-            source: 'Paid',
-            entree: '$1,500',
-            sortie: '$300',
-            solde: '$1,200',
-        },
-    ];
-
+    const [suiviAssociesData, setSuiviAssociesData] = useState<SuiviAssocieItem[]>([])
     const summaryDatas = [
         { label: "Clients", number: "24" },
         { label: "Invoices", number: "165" },
@@ -46,17 +18,33 @@ export default function Index() {
     ]
 
     const [searchQuery, setSearchQuery] = useState('');
-    const filteredData: SuiviAssocieItem[] = data.filter(item => item.libelle.toLowerCase().includes(searchQuery.toLowerCase()));
+    const filteredData: SuiviAssocieItem[] = suiviAssociesData.filter(item => item.libelle.toLowerCase().includes(searchQuery.toLowerCase()));
+
+    async function getSuiviAssocies() {
+        try {
+            const resp = await getAllSuiviAssocie();
+            setSuiviAssociesData(resp.data.data)
+        } catch (error) {
+            Alert.alert(
+                "Erreur",
+                "Oops, une erreur s'est produite"
+            );
+        }
+    }
+
+    useEffect(() => {
+        getSuiviAssocies()
+    }, [])
+    
 
     const renderCard = (item: SuiviAssocieItem, index: number) => (
         <View style={styles.card} key={index}>
             <Text style={styles.cardTitle}>Date: {item.date}</Text>
+            <Text>Général: {item.general}</Text>
             <Text>Libelle: {item.libelle}</Text>
             <Text>Tiers: {item.tiers}</Text>
-            <Text>Source/État: {item.source}</Text>
             <Text>Entrée: {item.entree}</Text>
             <Text>Sortie: {item.sortie}</Text>
-            <Text>Solde: {item.solde}</Text>
         </View>
     );
 
@@ -67,11 +55,11 @@ export default function Index() {
                     <MaterialIcons name="arrow-back" size={24} color="black" onPress={() => router.back()} />
                     <Text style={styles.headerText}>Suivi Associés</Text>
                 </View>
-                <View style={styles.summaryContainer}>
+                {/* <View style={styles.summaryContainer}>
                     {summaryDatas.map((data, index) => (
                         <SummaryCard number={data.number} label={data.label} key={index}/>
                     ))}
-                </View>
+                </View> */}
                 <View style={styles.actionsContainer}>
                     <TouchableOpacity style={styles.button}>
                         <Text style={styles.buttonText}>Saisie Manuelle</Text>
