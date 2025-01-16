@@ -1,33 +1,48 @@
 import { planComptable } from '@/class/planComptable';
+import { getAllPlanComptable } from '@/services/planService';
 import { MaterialIcons } from '@expo/vector-icons';
 import { router } from 'expo-router';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, Switch, StyleSheet, TextInput, ScrollView, SafeAreaView } from 'react-native';
 
 export default function comptable() {
-    const [data, setData] = useState<planComptable[]>([
-        { id: '1', nCompte: '#1', intitule: 'FAJ CH', typeCompte: 'Bilan', poste: 'Client', extraitCompte: false, traitementAnalytique: true },
-        { id: '2', nCompte: '#101100', intitule: 'Capital souscrit, non appelé', typeCompte: 'Bilan', poste: 'Client', extraitCompte: true, traitementAnalytique: false },
-    ]);
+    const [planComptableData, setPlanComptableData] = useState<planComptable[]>([]);
+
+    async function getPlansComptable() {
+        try {
+            const resp = await getAllPlanComptable()
+            setPlanComptableData(resp.data.data)
+        } catch (error) {
+
+        }
+    }
+
+    const [searchQuery, setSearchQuery] = useState('');
+    const filteredData: planComptable[] = planComptableData.filter(item => item.code.toLowerCase().includes(searchQuery.toLowerCase()));
+
+    useEffect(() => {
+        getPlansComptable();
+    }, [])
+
 
     const renderItem = (item: planComptable, index: number) => (
         <View style={styles.card} key={index}>
             <View style={styles.cardHeader}>
-                <Text style={styles.accountNumber}>{item.nCompte}</Text>
-                <Text style={styles.accountTitle}>{item.intitule}</Text>
+                <Text style={styles.accountNumber}>#{item.code}</Text>
+                <Text style={styles.accountTitle}>{item.libelle}</Text>
             </View>
             <View style={styles.cardBody}>
                 <View style={styles.toggleGroup}>
                     <Text style={styles.label}>Extrait Compte</Text>
                     <Switch
-                        value={item.extraitCompte}
+                        value={item.extrait_compte === 1 ? true : false}
                         disabled={true}
                     />
                 </View>
                 <View style={styles.toggleGroup}>
                     <Text style={styles.label}>Traitement Analytique</Text>
                     <Switch
-                        value={item.traitementAnalytique}
+                        value={item.traitement_analytique === 1 ? true : false}
                         disabled={true}
                     />
                 </View>
@@ -56,16 +71,22 @@ export default function comptable() {
                     <Text style={styles.headerText}>Plan comptable</Text>
                 </View>
                 <View style={styles.searchContainer}>
-                    <TextInput style={styles.searchInput} placeholder="Rechercher un compte" />
+                    <TextInput
+                        style={styles.searchInput} placeholder="Rechercher un compte"
+                        value={searchQuery}
+                        onChangeText={setSearchQuery}
+                    />
                     <TouchableOpacity style={styles.statusButton}>
                         <Text style={styles.statusButtonText}>Select Status</Text>
                         <MaterialIcons name="arrow-drop-down" size={24} color="black" />
                     </TouchableOpacity>
                 </View>
-                <View style={{marginHorizontal:10}}>
-                    {data.map((item, index) => (
-                        renderItem(item, index)
-                    ))}
+                <View style={{ marginHorizontal: 10 }}>
+                    {filteredData.length > 0 ? (
+                        filteredData.map((item, index) => renderItem(item, index))
+                    ) : (
+                        <Text style={styles.noData}>Aucune donnée n'est disponible pour la requête de recherche donnée.</Text>
+                    )}
                 </View>
             </ScrollView>
         </SafeAreaView>
@@ -78,7 +99,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         marginBottom: 30,
-        paddingHorizontal:10
+        paddingHorizontal: 10
     },
     headerText: {
         flex: 1,
@@ -127,4 +148,5 @@ const styles = StyleSheet.create({
         marginRight: 5,
         color: 'black',
     },
+    noData: { color: '#333', textAlign: 'center', marginVertical: 16 },
 });
