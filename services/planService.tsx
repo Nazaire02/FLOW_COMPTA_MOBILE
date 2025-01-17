@@ -9,5 +9,5 @@ export const getAllPlanComptable = async () => {
 };
 
 export const getAllPlanTiers = async () => {
-    return axiosInstance.get('/plan-tiers');
+    return axiosInstance.get('/plan-de-tiers');
 };

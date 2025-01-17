@@ -12,10 +12,12 @@ class poste{
     "updated_at": string
 }
 
-export class planComptable {
+export class PlanComptable {
     "id": string;
     "code": string;
     "libelle":string;
+    "type_compte_id": string;
+    "poste_id": string;
     "type_compte":typeCompte;
     "poste":poste;
     "extrait_compte":number;

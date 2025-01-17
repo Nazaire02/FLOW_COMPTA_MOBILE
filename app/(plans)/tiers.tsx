@@ -1,12 +1,15 @@
+import { PlanTiersItem } from '@/class/planTiersItem';
 import { SuiviTiersItem } from '@/class/suiviTiersItem';
 import { Colors } from '@/constants/Colors';
+import { getAllPlanTiers } from '@/services/planService';
 import { MaterialIcons } from '@expo/vector-icons';
 import { router } from 'expo-router';
-import React, { useState } from 'react';
-import { ScrollView, View, Text, StyleSheet, TouchableOpacity, FlatList, TextInput } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { ScrollView, View, Text, StyleSheet, TouchableOpacity, FlatList, TextInput, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function tiers() {
+    const [planTiersData, setPlanTiersData] = useState<PlanTiersItem[]>([])
     const data: SuiviTiersItem[] = [
         {
             numTiers: '#110009',
@@ -28,16 +31,32 @@ export default function tiers() {
         },
     ];
 
-    const [searchQuery, setSearchQuery] = useState('');
-    const filteredData: SuiviTiersItem[] = data.filter(item => item.numTiers.toLowerCase().includes(searchQuery.toLowerCase()));
+    async function getPlansTiers() {
+        try {
+            const resp = await getAllPlanTiers();
+            setPlanTiersData(resp.data)
+        } catch (error) {
+            Alert.alert(
+                "Erreur",
+                "Oops, une erreur s'est produite"
+            );
+        }
+    }
 
-    const renderCard = (item: SuiviTiersItem, index: number) => (
+    useEffect(() => {
+        getPlansTiers()
+    }, [])
+
+
+    const [searchQuery, setSearchQuery] = useState('');
+    const filteredData: PlanTiersItem[] = planTiersData.filter(item => item.code.toLowerCase().includes(searchQuery.toLowerCase()));
+
+    const renderCard = (item: PlanTiersItem, index: number) => (
         <View style={styles.card} key={index}>
             <View>
-            <Text style={styles.cardTitle}>N tier: {item.numTiers}</Text>
-            <Text>Compte général: {item.mainAccount}</Text>
-            <Text>Intitulé: {item.intitule}</Text>
-            <Text>Type de tiers: {item.typeTiers}</Text>
+                <Text style={styles.cardTitle}>N tier: #{item.code}</Text>
+                <Text>Intitulé: {item.libelle}</Text>
+                <Text>Type de tiers: {item.type_de_tier.libelle}</Text>
             </View>
             <View style={styles.actions}>
                 <TouchableOpacity>
@@ -142,5 +161,5 @@ const styles = StyleSheet.create({
         marginRight: 5,
         color: 'black',
     },
-    actions: { flexDirection: 'row', justifyContent: 'space-around', marginTop:20 },
+    actions: { flexDirection: 'row', justifyContent: 'space-around', marginTop: 20 },
 });

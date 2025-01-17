@@ -1,31 +1,34 @@
-import { planComptable } from '@/class/planComptable';
+import { PlanComptable } from '@/class/planComptable';
 import { getAllPlanComptable } from '@/services/planService';
 import { MaterialIcons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import React, { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, Switch, StyleSheet, TextInput, ScrollView, SafeAreaView } from 'react-native';
+import { View, Text, TouchableOpacity, Switch, StyleSheet, TextInput, ScrollView, SafeAreaView, Alert } from 'react-native';
 
 export default function comptable() {
-    const [planComptableData, setPlanComptableData] = useState<planComptable[]>([]);
+    const [planComptableData, setPlanComptableData] = useState<PlanComptable[]>([]);
 
     async function getPlansComptable() {
         try {
             const resp = await getAllPlanComptable()
             setPlanComptableData(resp.data.data)
         } catch (error) {
-
+            Alert.alert(
+                "Erreur",
+                "Oops, une erreur s'est produite"
+            );
         }
     }
 
     const [searchQuery, setSearchQuery] = useState('');
-    const filteredData: planComptable[] = planComptableData.filter(item => item.code.toLowerCase().includes(searchQuery.toLowerCase()));
+    const filteredData: PlanComptable[] = planComptableData.filter(item => item.code.toLowerCase().includes(searchQuery.toLowerCase()));
 
     useEffect(() => {
         getPlansComptable();
     }, [])
 
 
-    const renderItem = (item: planComptable, index: number) => (
+    const renderItem = (item: PlanComptable, index: number) => (
         <View style={styles.card} key={index}>
             <View style={styles.cardHeader}>
                 <Text style={styles.accountNumber}>#{item.code}</Text>
