@@ -5,6 +5,7 @@ export default function RootLayout() {
         <Stack>
             <Stack.Screen name="index" options={{ headerShown: false }} />
             <Stack.Screen name="amortissement" options={{ headerShown: false }} />
+            <Stack.Screen name="bilanSmt" options={{ headerShown: false }} />
         </Stack>
     );
 }

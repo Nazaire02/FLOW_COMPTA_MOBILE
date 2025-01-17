@@ -8,6 +8,7 @@ export default function bilansComptes() {
   const data = [
     { id: '1', title: 'Compte de résultat SMT', icon: 'assessment', link: "(bilans)" },
     { id: '2', title: 'Amortissement', icon: 'event', link: "(bilans)/amortissement" },
+    { id: '3', title: 'Bilan SMT', icon: 'assessment', link: "(bilans)/bilanSmt" },
   ];
 
   return (

@@ -1,7 +1,8 @@
 import { Colors } from '@/constants/Colors';
+import { getAllBilanSmt } from '@/services/bilanService';
 import { MaterialIcons } from '@expo/vector-icons';
 import { router } from 'expo-router';
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
     ScrollView,
     View,
@@ -32,6 +33,18 @@ export default function index() {
         },
     ];
 
+    async function getBilanSmt() {
+        try {
+            const resp = await getAllBilanSmt()
+        } catch (error) {
+            
+        }
+    }
+
+    useEffect(() => {
+        getBilanSmt()
+    }, [])
+    
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: '#FFF' }}>
             <ScrollView style={styles.container}>

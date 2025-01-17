@@ -1,4 +1,4 @@
-export default class Actif{
+export default class Passif{
     "imputation"?: string;
     "ref"?: string;
     "libelle"?: string;
