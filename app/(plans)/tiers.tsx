@@ -10,27 +10,6 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function tiers() {
     const [planTiersData, setPlanTiersData] = useState<PlanTiersItem[]>([])
-    const data: SuiviTiersItem[] = [
-        {
-            numTiers: '#110009',
-            mainAccount: '#030303',
-            intitule: 'Company A',
-            typeTiers: 'Type tiers',
-        },
-        {
-            numTiers: '#110009',
-            mainAccount: '#030303',
-            intitule: 'Company A',
-            typeTiers: 'Type tiers',
-        },
-        {
-            numTiers: '#110009',
-            mainAccount: '#030303',
-            intitule: 'Company A',
-            typeTiers: 'Type tiers',
-        },
-    ];
-
     async function getPlansTiers() {
         try {
             const resp = await getAllPlanTiers();

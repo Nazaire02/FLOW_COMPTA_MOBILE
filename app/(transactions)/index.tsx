@@ -1,65 +1,44 @@
 import { opComptItem } from '@/class/opComptItem';
 import { SuiviAssocieItem } from '@/class/SuiviAssocieItem';
 import { Colors } from '@/constants/Colors';
+import { getAllOpComptable } from '@/services/operationService';
 import { MaterialIcons } from '@expo/vector-icons';
 import { router } from 'expo-router';
-import React, { useState } from 'react';
-import { ScrollView, View, Text, StyleSheet, TouchableOpacity, FlatList, TextInput } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { ScrollView, View, Text, StyleSheet, TouchableOpacity, FlatList, TextInput, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function Index() {
-    //Les éléments de chaque objet seront affichés dans le mm ordre que dans l'objet
-    const data: opComptItem[] = [
-        {
-            date: '2024-12-01',
-            nSaisie:'4',
-            desOperation:'facture CIE',
-            refPiece:'FHNdjzedkzedf',
-            mainAccount:'104300',
-            tiersAccount: '104302',
-            planAnalytique:true,
-            imputation:'Ventes',
-            debit:'1000',
-            credit:'1000'
-        },
-        {
-          date: '2024-12-01',
-          nSaisie:'4',
-          desOperation:'facture CIE',
-          refPiece:'FHNdjzedkzedf',
-          mainAccount:'104300',
-          tiersAccount: '104302',
-          planAnalytique:true,
-          imputation:'Ventes',
-          debit:'1000',
-          credit:'1000'
-        },
-        {
-          date: '2024-12-01',
-          nSaisie:'4',
-          desOperation:'facture CIE',
-          refPiece:'FHNdjzedkzedf',
-          mainAccount:'104300',
-          tiersAccount: '104302',
-          planAnalytique:true,
-          imputation:'Ventes',
-          debit:'1000',
-          credit:'1000'
-        },
-    ];
+    const [opComptableData, setOpComptableData] = useState<opComptItem[]>([])
 
     const [searchQuery, setSearchQuery] = useState('');
-    const filteredData: opComptItem[] = data.filter(item => item.refPiece.toLowerCase().includes(searchQuery.toLowerCase()));
+    const filteredData: opComptItem[] = opComptableData.filter(item => item.ref_oparation.toLowerCase().includes(searchQuery.toLowerCase()));
+
+    async function getOpComptableData() {
+        try {
+            const resp = await getAllOpComptable();
+            setOpComptableData(resp.data.data)
+        } catch (error) {
+            Alert.alert(
+                "Erreur",
+                "Oops, une erreur s'est produite"
+            );
+        }
+    }
+
+    useEffect(() => {
+        getOpComptableData()
+    }, [])
 
     const renderCard = (item: opComptItem, index: number) => (
         <View style={styles.card} key={index}>
             <Text style={styles.cardTitle}>Date: {item.date}</Text>
-            <Text>N saisie: {item.nSaisie}</Text>
-            <Text>Desc. opération: {item.desOperation}</Text>
-            <Text>REF PIECE: {item.refPiece}</Text>
-            <Text>Compte général: {item.mainAccount}</Text>
-            <Text>Compte tiers: {item.tiersAccount}</Text>
-            <Text>Plan analytique: {item.planAnalytique ? "Oui":"Non"}</Text>
+            <Text>N saisie: {item.num_saisie}</Text>
+            <Text>Desc. opération: {item.libelle}</Text>
+            <Text>REF PIECE: {item.ref_oparation}</Text>
+            <Text>Compte général: {item.general}</Text>
+            <Text>Compte tiers: {item.tiers}</Text>
+            <Text>Plan analytique: {item.analytique ? "Oui" : "Non"}</Text>
             <Text>Imputation: {item.imputation}</Text>
             <Text>Débit: {item.debit}</Text>
             <Text>Crédit: {item.credit}</Text>

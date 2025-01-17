@@ -1,7 +1,7 @@
 import axiosInstance from "./axiosInstance";
 
 export const getAllOpComptable= async () => {
-    return axiosInstance.get('/etat-clients');
+    return axiosInstance.get('/operations-comptables');
 };
 
 export const getAllOpAnalytique = async () => {

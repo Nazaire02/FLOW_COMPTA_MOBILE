@@ -1,11 +1,11 @@
 export class opComptItem {
     "date": string;
-    "desOperation": string;
-    "nSaisie":string;
-    "refPiece":string;
-    "mainAccount":string;
-    "tiersAccount":string;
-    "planAnalytique":boolean;
+    "libelle": string;
+    "num_saisie":number;
+    "ref_oparation":string;
+    "general":string;
+    "tiers":string;
+    "analytique":boolean;
     "imputation":string;
     "debit":string;
     "credit":string
