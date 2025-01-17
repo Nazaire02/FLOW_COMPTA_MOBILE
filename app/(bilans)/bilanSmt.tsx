@@ -2,68 +2,36 @@ import Actif from '@/class/actif';
 import { Bilan } from '@/class/bilan';
 import Passif from '@/class/passif';
 import { Colors } from '@/constants/Colors';
+import { getAllBilanSmt } from '@/services/bilanService';
 import { MaterialIcons } from '@expo/vector-icons';
 import { router } from 'expo-router';
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, FlatList, SafeAreaView, ScrollView } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, StyleSheet, FlatList, SafeAreaView, ScrollView, Alert } from 'react-native';
 
 export default function bilanSmt() {
-    const [bilanData, setBilanData] = useState<Bilan>(
-        {
-            "actifs": [
-                {
-                    "imputation": "2",
-                    "value": false,
-                    "libelle": "ACTIF IMMOBILISE (1)"
-                },
-                {
-                    "imputation": "20",
-                    "ref": "AA",
-                    "value": false,
-                    "libelle": "Charges immobilisées"
-                },
-                {
-                    "imputation": "201",
-                    "ref": "AB",
-                    "libelle": "Frais d'établissement et charges à répartir",
-                    "brut": 0,
-                    "amort": 0,
-                    "net_1": 0,
-                    "net_2": 0,
-                    "value": true
-                }
-            ],
-            "passifs": [
-                {
-                    "imputation": "1",
-                    "value": false,
-                    "libelle": "CAPITAUX PROPRES ET RESSOURCES ASSIMILEES"
-                },
-                {
-                    "imputation": "101",
-                    "ref": "CA",
-                    "value": false,
-                    "libelle": "Capital (101)"
-                },
-                {
-                    "imputation": "1011",
-                    "ref": "CB",
-                    "libelle": "Actionnaires capital non appelé (1011)",
-                    "brut": 0,
-                    "amort": 0,
-                    "net_1": 0,
-                    "net_2": 0,
-                    "value": true
-                }
-            ]
-        }
-    )
+    const [bilanData, setBilanData] = useState<Bilan>()
 
-    const actifs = bilanData.actifs;
-    const passifs = bilanData.passifs
+    const actifs = bilanData ? bilanData.actifs:[];
+    const passifs = bilanData? bilanData.passifs:[]
 
     const labelsActif = ['Imputation', 'Ref', 'Actif', 'Brut', 'Amort/Prov', 'Net(Exercice N)', 'Net(Exercice N-1)'];
     const labelsPassif = ['Imputation', 'Ref', 'Passif', 'Brut', 'Amort/Prov', 'Net(Exercice N)', 'Net(Exercice N-1)'];
+
+    async function getBilan() {
+        try {
+            const resp = await getAllBilanSmt()
+            setBilanData(resp.data.data)
+        } catch (error) {
+            Alert.alert(
+                "Erreur",
+                "Oops, une erreur s'est produite"
+            );
+        }
+    }
+
+    useEffect(() => {
+        getBilan()
+    }, [])
 
     const renderTable = (items: Actif[] | Passif[], isActif = true) => (
         <View style={styles.table}>
