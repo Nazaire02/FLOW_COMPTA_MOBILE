@@ -9,6 +9,7 @@ export default function bilansComptes() {
     { id: '1', title: 'Compte de résultat SMT', icon: 'assessment', link: "(bilans)" },
     { id: '2', title: 'Amortissement', icon: 'event', link: "(bilans)/amortissement" },
     { id: '3', title: 'Bilan SMT', icon: 'assessment', link: "(bilans)/bilanSmt" },
+    { id: '3', title: 'Compte de résultat', icon: 'assessment', link: "(bilans)/resultat" },
   ];
 
   return (
