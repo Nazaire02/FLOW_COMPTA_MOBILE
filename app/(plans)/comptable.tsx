@@ -1,12 +1,15 @@
 import { PlanComptable } from '@/class/planComptable';
+import AddPlanComptable from '@/components/AddPlanComptable';
+import { Colors } from '@/constants/Colors';
 import { getAllPlanComptable } from '@/services/planService';
 import { MaterialIcons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import React, { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, Switch, StyleSheet, TextInput, ScrollView, SafeAreaView, Alert } from 'react-native';
+import { View, Text, TouchableOpacity, Switch, StyleSheet, TextInput, ScrollView, SafeAreaView, Alert, Modal, Pressable } from 'react-native';
 
 export default function comptable() {
     const [planComptableData, setPlanComptableData] = useState<PlanComptable[]>([]);
+    const [modalVisible, setModalVisible] = useState(false);
 
     async function getPlansComptable() {
         try {
@@ -66,8 +69,13 @@ export default function comptable() {
             </View>
         </View>
     );
+
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "#FFF" }}>
+            <AddPlanComptable
+                modalVisible={modalVisible}
+                setModalVisible={setModalVisible}
+            />
             <ScrollView style={styles.container}>
                 <View style={styles.header}>
                     <MaterialIcons name="arrow-back" size={24} color="black" onPress={() => router.back()} />
@@ -79,9 +87,8 @@ export default function comptable() {
                         value={searchQuery}
                         onChangeText={setSearchQuery}
                     />
-                    <TouchableOpacity style={styles.statusButton}>
-                        <Text style={styles.statusButtonText}>Select Status</Text>
-                        <MaterialIcons name="arrow-drop-down" size={24} color="black" />
+                    <TouchableOpacity style={styles.button} onPress={() => setModalVisible(true)}>
+                        <Text style={styles.buttonText}>Ajouter</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={{ marginHorizontal: 10 }}>
@@ -152,4 +159,6 @@ const styles = StyleSheet.create({
         color: 'black',
     },
     noData: { color: '#333', textAlign: 'center', marginVertical: 16 },
+    button: { backgroundColor: Colors.light.tint, padding: 12, borderRadius: 8, marginBottom: 8 },
+    buttonText: { color: '#FFF', textAlign: 'center' },
 });

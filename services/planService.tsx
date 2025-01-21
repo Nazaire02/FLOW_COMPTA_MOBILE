@@ -11,3 +11,7 @@ export const getAllPlanComptable = async () => {
 export const getAllPlanTiers = async () => {
     return axiosInstance.get('/plan-de-tiers');
 };
+
+export const getAllTypeTiers = async () => {
+    return axiosInstance.get('/type-de-tiers');
+};
